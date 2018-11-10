@@ -1,0 +1,15 @@
+{
+  "name": "server",
+  "version": "1.0.0",
+  "description": "test test",
+  "main": "node.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "lorenzgerber",
+  "license": "BSD-2-Clause",
+  "dependencies": {
+    "express": "^4.16.4",
+    "express-fileupload": "^1.0.0"
+  }
+}
