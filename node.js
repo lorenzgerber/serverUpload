@@ -2,25 +2,12 @@
 
 // How to upload Files using Curl
 // curl -k -X POST -F "sampleFile=@test.txt" "http://localhost:8000/upload"
+// wget localhost:8000/sankey/test.html
 
 
 const express = require('express');
 const fileUpload = require('express-fileupload');
 const app = express();
-
-
-// make a random filename
-function makeId() {
-  var text = "";
-  var possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
-
-  for (var i = 0; i < 5; i++)
-    text += possible.charAt(Math.floor(Math.random() * possible.length));
-
-  return text;
-}
-
-
 
 // default options
 app.use(fileUpload());
@@ -33,19 +20,33 @@ app.post('/upload', function(req, res) {
   // The name of the input field (i.e. "sampleFile") is used to retrieve the uploaded file
   let sampleFile = req.files.sampleFile;
 
-
-  var makeName = makeId();
-  makeName = './' + makeName + '.txt';
-
-
   // Use the mv() method to place the file somewhere on your server
-  sampleFile.mv(makeName, function(err) {
+  sampleFile.mv(sampleFile.name, function(err) {
     if (err)
       return res.status(500).send(err);
 
     res.send('File uploaded!');
   });
+
+  const cliInter = require ('./cliInteraction.js');
+  cliInter.runDocker(sampleFile.name);
+
+  
 });
+
+app.get('/sankey/:id', function (req, res) {
+    
+  var requestedFile = req.params.id;
+  
+  const fs = require('fs')
+  reportHtml = './' + requestedFile;
+  console.log(reportHtml)
+
+  absoluteReportHtml = '/home/lgerber/git/server/' + requestedFile
+  
+  let checkFileExists = s => new Promise(r=>fs.access(s, fs.F_OK, e => r(!e))); 
+  checkFileExists(reportHtml).then(res.sendFile(absoluteReportHtml));
+})
 
 
 
