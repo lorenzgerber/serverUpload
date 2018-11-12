@@ -19,26 +19,6 @@ module.exports = {
         }); 
     },
 
-    checkForFile(fileName){
-        var checkExist = '[[ -e ' + fileName + ']]'
-        const ls = spawn(checkExist);
-        ls.stdout.on('data', (data) => {
-            console.log(`stdout: ${data}`);
-        });
-
-        ls.stderr.on('data', (data) => {
-            console.log(`stderr: ${data}`);
-        });
-
-        ls.on('close', (code) => {
-            console.log(`child process exited with code ${code}`);
-        });
-    }
-
-
-
-
-
 }
 
 

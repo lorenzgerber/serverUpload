@@ -28,7 +28,7 @@ app.post('/upload', function(req, res) {
     res.send('File uploaded!');
   });
 
-  const cliInter = require ('./cliInteraction.js');
+  const cliInter = require ('./runDocker.js');
   cliInter.runDocker(sampleFile.name);
 
   
